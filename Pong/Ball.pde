@@ -12,6 +12,7 @@ public Ball(int inputX, int inputY, double inputSpeed, double inputAngle) {
 //location
 private int x;
 private int y;
+private int radius = 10;
 
 public int getX() {
     return x;
@@ -36,7 +37,7 @@ public double getAngle() {
 //collision
 //display
 
-void display(int x, int y, int radius) {
+void display() {
   circle(x, y, radius);
 }
 

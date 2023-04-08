@@ -34,6 +34,12 @@ public double getAngle() {
   return angle;
 }
 
+public void moveBall() {
+  //tick movement, this just updates location every tick/frame
+  x += speed*Math.cos(angle);
+  y += speed*Math.sin(angle);
+}
+
 //collision
 //display
 

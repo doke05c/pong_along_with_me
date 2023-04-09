@@ -10,15 +10,15 @@ public Ball(int inputX, int inputY, double inputSpeed, double inputAngle) {
   
   
 //location
-private int x;
-private int y;
+private double x;
+private double y;
 private int radius = 10;
 
-public int getX() {
+public double getX() {
     return x;
 }
 
-public int getY() {
+public double getY() {
     return y;
 }
 
@@ -36,15 +36,15 @@ public double getAngle() {
 
 public void moveBall() {
   //tick movement, this just updates location every tick/frame
-  x += speed*Math.cos(angle);
-  y += speed*Math.sin(angle);
+  x += speed*Math.cos(angle*3.1415/180);
+  y += speed*Math.sin(angle*3.1415/180);
 }
 
 //collision
 //display
 
 void display() {
-  circle(x, y, radius);
+  circle((float)x, (float)y, radius);
 }
 
 }

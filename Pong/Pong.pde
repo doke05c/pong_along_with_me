@@ -1,4 +1,6 @@
-Ball one = new Ball(400, 300, 1, 10);
+Ball one = new Ball(400, 300, 1, 0);
+Ball two = new Ball(400, 300, 1, 45);
+Ball three = new Ball(400, 300, 1, 90);
 
 void setup(){
   frameRate(60);
@@ -7,8 +9,14 @@ void setup(){
 
 void draw(){
   background(0);
-  one.display();
-  one.moveBall();
+  //one.display();
+  //one.moveBall();
+  
+  two.display();
+  two.moveBall();
+  
+  three.display();
+  three.moveBall();
 }
 
 

@@ -36,19 +36,26 @@ Paddle rightPaddle = new Paddle(xSize-paddleOffset, ySize/2, xSize/80, ySize/12)
 void draw(){
   background(0);
   if (ball.getX() < leftPaddleLocation+ball.getRadius()/2) {
-    ball = new Ball(xSize/2, ySize/2, ballSpeed, determineAngle());
-    rightScore++;
+    if ((ball.getY() < leftPaddle.getY()-ball.getRadius()/2) || (ball.getY() > leftPaddle.getY()+leftPaddle.getYDimension()+ball.getRadius()/2)) {
+      ball = new Ball(xSize/2, ySize/2, ballSpeed, determineAngle());
+      rightScore++;
+    } else {
+      print("reflect!");
+    }
+
   } else if (ball.getX() > rightPaddleLocation-ball.getRadius()/2) {
-    ball = new Ball(xSize/2, ySize/2, ballSpeed, determineAngle());
-    leftScore++;
+    if ((ball.getY() < rightPaddle.getY()-ball.getRadius()/2) || (ball.getY() > rightPaddle.getY()+rightPaddle.getYDimension()+ball.getRadius()/2)) {
+      ball = new Ball(xSize/2, ySize/2, ballSpeed, determineAngle());
+      leftScore++;
+    } else {
+      print("reflect!");
+    }
   }
   
   if (leftUp) {leftPaddle.movePaddle(ySize/-90);}
   if (leftDown) {leftPaddle.movePaddle(ySize/90);}
-  
   if (rightUp) {rightPaddle.movePaddle(ySize/-90);}
   if (rightDown) {rightPaddle.movePaddle(ySize/90);}
-  
   ball.display();
   leftPaddle.display();
   rightPaddle.display();

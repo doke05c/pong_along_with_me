@@ -1,12 +1,15 @@
 public int leftScore = 0;
 public int rightScore = 0;
+public boolean leftUp = false;
+public boolean leftDown = false;
+public boolean rightUp = false;
+public boolean rightDown = false;
 
 public void displayScore() {
   textSize(xSize/20);
   text(leftScore, xSize/2 - xSize/16, ySize/10); 
   text(rightScore, xSize/2 + xSize/16, ySize/10); 
 }
-
 
 public double determineAngle() {
   double result;
@@ -40,21 +43,11 @@ void draw(){
     leftScore++;
   }
   
-  if (keyPressed) {
-    //left paddle movement
-    if ((key == 'w' || key == 'W') && (leftPaddle.getY() > 2)) {
-      leftPaddle.movePaddle(ySize/-90);
-    } else if ((key == 's' || key == 'S') && (leftPaddle.getY() < (ySize-leftPaddle.getYDimension()-2))) {
-      leftPaddle.movePaddle(ySize/90);
-    }
-    
-    //right paddle movement
-    if ((keyCode == UP) && (rightPaddle.getY() > 2)) {
-      rightPaddle.movePaddle(ySize/-90);
-    } else if ((keyCode == DOWN) && (rightPaddle.getY() < (ySize-rightPaddle.getYDimension()-2))) {
-      rightPaddle.movePaddle(ySize/90);
-    }
-  }
+  if (leftUp) {leftPaddle.movePaddle(ySize/-90);}
+  if (leftDown) {leftPaddle.movePaddle(ySize/90);}
+  
+  if (rightUp) {rightPaddle.movePaddle(ySize/-90);}
+  if (rightDown) {rightPaddle.movePaddle(ySize/90);}
   
   ball.display();
   leftPaddle.display();
@@ -63,6 +56,41 @@ void draw(){
   ball.moveBall();
 }
 
+void keyPressed() {
+    //left paddle movement
+    if ((key == 'w' || key == 'W') && (leftPaddle.getY() > 2)) {
+      leftUp = true;
+    }
+    if ((key == 's' || key == 'S') && (leftPaddle.getY() < (ySize-leftPaddle.getYDimension()-2))) {
+      leftDown = true;
+    }
+    
+    //right paddle movement
+    if ((keyCode == UP) && (rightPaddle.getY() > 2)) {
+      rightUp = true;
+    }
+    if ((keyCode == DOWN) && (rightPaddle.getY() < (ySize-rightPaddle.getYDimension()-2))) {
+      rightDown = true;
+    }
+}
+
+void keyReleased() {
+    //left paddle movement
+    if ((key == 'w' || key == 'W')) {
+      leftUp = false;
+    }
+    if ((key == 's' || key == 'S')) {
+      leftDown = false;
+    }
+    
+    //right paddle movement
+    if ((keyCode == UP)) {
+      rightUp = false;
+    }
+    if ((keyCode == DOWN)) {
+      rightDown = false;
+    }
+}
 
 static final int FPS = 60;
 static final int xSize = /*960;*/1280;

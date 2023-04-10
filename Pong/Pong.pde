@@ -27,6 +27,8 @@ void setup(){
   
 Ball ball = new Ball(xSize/2, ySize/2, ballSpeed, determineAngle());
 Paddle leftPaddle = new Paddle(paddleOffset-(xSize/80), ySize/2, xSize/80, ySize/12);
+Paddle rightPaddle = new Paddle(xSize-paddleOffset, ySize/2, xSize/80, ySize/12);
+
 
 void draw(){
   background(0);
@@ -43,15 +45,16 @@ void draw(){
   }
   
   leftPaddle.display();
+  rightPaddle.display();
   displayScore();
   ball.moveBall();
 }
 
 
-static final int FPS = 120;
+static final int FPS = 60;
 static final int xSize = /*960;*/1280;
 static final int ySize = /*540;*/720;
-static final double ballSpeed = xSize/(2.13*FPS);
+static final double ballSpeed = xSize/(2.133333*FPS);
 
 static final int paddleOffset = xSize/32;
 

@@ -1,16 +1,21 @@
+//score variables
 public int leftScore = 0;
 public int rightScore = 0;
+
+//booleans for paddle movement check
 public boolean leftUp = false;
 public boolean leftDown = false;
-public boolean rightUp = false;
-public boolean rightDown = false;
+public boolean rightUp = false; 
+public boolean rightDown = false; 
 
+//display score on screen
 public void displayScore() {
   textSize(xSize/20);
   text(leftScore, xSize/2 - xSize/16, ySize/10); 
   text(rightScore, xSize/2 + xSize/16, ySize/10); 
 }
 
+//determine where the spawning ball should head
 public double determineAngle() {
   double result;
   double randomAngleLeft = Math.random() * (leftSideUpperAngle - leftSideLowerAngle + 1) + leftSideLowerAngle;
@@ -27,14 +32,18 @@ void setup(){
   frameRate(FPS);
   size(/*960,540);*/1280, 720);
 }
-  
+
+//instantiate our objects
 Ball ball = new Ball(xSize/2, ySize/2, ballSpeed, determineAngle());
 Paddle leftPaddle = new Paddle(paddleOffset-(xSize/80), ySize/2, xSize/80, ySize/12);
 Paddle rightPaddle = new Paddle(xSize-paddleOffset, ySize/2, xSize/80, ySize/12);
 
 
+//every tick
 void draw(){
   background(0);
+  
+  //determination of points: if ball hits a paddle, reflect. if ball misses paddle, increase score of other side
   if (ball.getX() < leftPaddleLocation+ball.getRadius()/2) {
     if ((ball.getY() < leftPaddle.getY()-ball.getRadius()/2) || (ball.getY() > leftPaddle.getY()+leftPaddle.getYDimension()+ball.getRadius()/2)) {
       ball = new Ball(xSize/2, ySize/2, ballSpeed, determineAngle());
@@ -52,6 +61,7 @@ void draw(){
     }
   }
   
+  //reflect ball off the VERTICAL ONLY! screen border
   if (ball.getY() < ball.getRadius()/2) {
     ball.reflectBorder();
     ball.moveBall(0, ball.getRadius()/4);
@@ -61,6 +71,7 @@ void draw(){
     ball.moveBall(0, -1 * ball.getRadius()/4);
   }
   
+  //display/keystroke updates
   if (leftUp) {leftPaddle.movePaddle(ySize/-90);}
   if (leftDown) {leftPaddle.movePaddle(ySize/90);}
   if (rightUp) {rightPaddle.movePaddle(ySize/-90);}
@@ -121,17 +132,22 @@ void keyReleased() {
     }
 }
 
+//screen/FPS attributes
 static final int FPS = 60;
 static final int xSize = /*960;*/1280;
 static final int ySize = /*540;*/720;
+
 static final double ballSpeed = xSize/(2.133333*FPS);
 
+//how much distance between paddle and horizontal border?
 static final int paddleOffset = xSize/32;
 
+//angle limits for starting ball
 static final int rightSideUpperAngle = 388;
 static final int rightSideLowerAngle = 332;
-static final int rightPaddleLocation = xSize - paddleOffset;
-
 static final int leftSideUpperAngle = 208;
 static final int leftSideLowerAngle = 152;
+
+//where should the ball check for paddles?
+static final int rightPaddleLocation = xSize - paddleOffset;
 static final int leftPaddleLocation = paddleOffset;

@@ -51,17 +51,17 @@ public void moveBall(double xIncrement, double yIncrement) {
 }
 
 //collision
-
 public void reflectPaddle() {
+  //reflect ball against paddle (TO BE IMPROVED!)
   angle = 180-(angle%360);
 }
 
 public void reflectBorder() {
+  //reflect ball against VERTICAL ONLY! border
   angle = 360-(angle%360);
 }
 
 //display
-
 public void display() {
   circle((float)x, (float)y, (float)radius);
 }

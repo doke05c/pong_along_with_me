@@ -35,8 +35,8 @@ void setup(){
 
 //instantiate our objects
 Ball ball = new Ball(xSize/2, ySize/2, ballSpeed, determineAngle());
-Paddle leftPaddle = new Paddle(paddleOffset-(xSize/80), ySize/2, xSize/80, ySize/12);
-Paddle rightPaddle = new Paddle(xSize-paddleOffset, ySize/2, xSize/80, ySize/12);
+Paddle leftPaddle = new Paddle(paddleOffset-(xSize/80), ySize/2, xSize/80, ySize/10);
+Paddle rightPaddle = new Paddle(xSize-paddleOffset, ySize/2, xSize/80, ySize/10);
 
 
 //every tick
@@ -45,7 +45,7 @@ void draw(){
   
   //determination of points: if ball hits a paddle, reflect. if ball misses paddle, increase score of other side
   if (ball.getX() < leftPaddleLocation+ball.getRadius()/2) {
-    if ((ball.getY() < leftPaddle.getY()-ball.getRadius()/2) || (ball.getY() > leftPaddle.getY()+leftPaddle.getYDimension()+ball.getRadius()/2)) {
+    if ((ball.getY() < leftPaddle.getY()-ball.getRadius()/2-paddlePity) || (ball.getY() > leftPaddle.getY()+leftPaddle.getYDimension()+ball.getRadius()/2+paddlePity)) {
       ball = new Ball(xSize/2, ySize/2, ballSpeed, determineAngle());
       rightScore++;
     } else {
@@ -151,3 +151,6 @@ static final int leftSideLowerAngle = 152;
 //where should the ball check for paddles?
 static final int rightPaddleLocation = xSize - paddleOffset;
 static final int leftPaddleLocation = paddleOffset;
+
+//how much leeway can we give the player for paddle reflects?
+static final int paddlePity = 3;

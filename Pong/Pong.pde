@@ -25,24 +25,25 @@ void setup(){
   size(/*960,540);*/1280, 720);
 }
   
-Ball one = new Ball(xSize/2, ySize/2, ballSpeed, determineAngle());
+Ball ball = new Ball(xSize/2, ySize/2, ballSpeed, determineAngle());
+
 
 void draw(){
   background(0);
-  if (one.getX() < leftPaddleLocation) {
-    one = new Ball(xSize/2, ySize/2, ballSpeed, determineAngle());
-    one.display();
+  if (ball.getX() < leftPaddleLocation) {
+    ball = new Ball(xSize/2, ySize/2, ballSpeed, determineAngle());
+    ball.display();
     rightScore++;
-  } else if (one.getX() > rightPaddleLocation) {
-    one = new Ball(xSize/2, ySize/2, ballSpeed, determineAngle());
-    one.display();
+  } else if (ball.getX() > rightPaddleLocation) {
+    ball = new Ball(xSize/2, ySize/2, ballSpeed, determineAngle());
+    ball.display();
     leftScore++;
   } else {
-    one.display();
+    ball.display();
   }
   
   displayScore();
-  one.moveBall();
+  ball.moveBall();
 }
 
 

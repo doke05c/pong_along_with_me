@@ -12,7 +12,7 @@ public Ball(int inputX, int inputY, double inputSpeed, double inputAngle) {
 //location
 private double x;
 private double y;
-private int radius = 10;
+private int radius = xSize/128;
 
 public double getX() {
     return x;

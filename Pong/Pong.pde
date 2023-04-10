@@ -41,10 +41,18 @@ void draw(){
   }
   
   if (keyPressed) {
+    //left paddle movement
     if ((key == 'w' || key == 'W') && (leftPaddle.getY() > 2)) {
       leftPaddle.movePaddle(ySize/-90);
     } else if ((key == 's' || key == 'S') && (leftPaddle.getY() < (ySize-leftPaddle.getYDimension()-2))) {
       leftPaddle.movePaddle(ySize/90);
+    }
+    
+    //right paddle movement
+    if ((keyCode == UP) && (rightPaddle.getY() > 2)) {
+      rightPaddle.movePaddle(ySize/-90);
+    } else if ((keyCode == DOWN) && (rightPaddle.getY() < (ySize-rightPaddle.getYDimension()-2))) {
+      rightPaddle.movePaddle(ySize/90);
     }
   }
   

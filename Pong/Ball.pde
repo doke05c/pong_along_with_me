@@ -1,7 +1,7 @@
 public class Ball {
 
 //construction
-public Ball(int inputX, int inputY, double inputSpeed, double inputAngle) {
+public Ball(double inputX, double inputY, double inputSpeed, double inputAngle) {
   x = inputX;
   y = inputY;
   speed = inputSpeed;
@@ -43,7 +43,7 @@ public void moveBall() {
 //collision
 //display
 
-void display() {
+public void display() {
   circle((float)x, (float)y, radius);
 }
 

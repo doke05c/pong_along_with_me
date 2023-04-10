@@ -38,16 +38,26 @@ public double getAngle() {
   return angle;
 }
 
-public void moveBall() {
+public void moveBallTick() {
   //tick movement, this just updates location every tick/frame
   x += speed*Math.cos(angle*3.1415/180);
   y += speed*Math.sin(angle*3.1415/180);
 }
 
+public void moveBall(double xIncrement, double yIncrement) {
+  //movement for non-user controlled purposes (spooky)
+  x += xIncrement;
+  y += yIncrement;
+}
+
 //collision
 
-public void reflect() {
-  speed = speed * -1;
+public void reflectPaddle() {
+  angle = 180-(angle%360);
+}
+
+public void reflectBorder() {
+  angle = 360-(angle%360);
 }
 
 //display

@@ -40,7 +40,7 @@ void draw(){
       ball = new Ball(xSize/2, ySize/2, ballSpeed, determineAngle());
       rightScore++;
     } else {
-      ball.reflect(); //figure out a way to change angle relative to ball pos on paddle
+      ball.reflectPaddle(); //figure out a way to change angle relative to ball pos on paddle
     }
 
   } else if (ball.getX() > rightPaddleLocation-ball.getRadius()/2) {
@@ -48,8 +48,17 @@ void draw(){
       ball = new Ball(xSize/2, ySize/2, ballSpeed, determineAngle());
       leftScore++;
     } else {
-      ball.reflect(); //figure out a way to change angle relative to ball pos on paddle
+      ball.reflectPaddle(); //figure out a way to change angle relative to ball pos on paddle
     }
+  }
+  
+  if (ball.getY() < ball.getRadius()/2) {
+    ball.reflectBorder();
+    ball.moveBall(0, ball.getRadius()/4);
+  }
+  if (ball.getY() > ySize-ball.getRadius()/2) {
+    ball.reflectBorder();
+    ball.moveBall(0, -1 * ball.getRadius()/4);
   }
   
   if (leftUp) {leftPaddle.movePaddle(ySize/-90);}
@@ -60,7 +69,7 @@ void draw(){
   leftPaddle.display();
   rightPaddle.display();
   displayScore();
-  ball.moveBall();
+  ball.moveBallTick();
   
   //debug
   println("X Coordinate: ");
@@ -78,18 +87,18 @@ void draw(){
 
 void keyPressed() {
     //left paddle movement
-    if ((key == 'w' || key == 'W') && (leftPaddle.getY() > 2)) {
+    if ((key == 'w' || key == 'W') && (leftPaddle.getY() > 6)) { //fix paddle noclipping
       leftUp = true;
     }
-    if ((key == 's' || key == 'S') && (leftPaddle.getY() < (ySize-leftPaddle.getYDimension()-2))) {
+    if ((key == 's' || key == 'S') && (leftPaddle.getY() < (ySize-leftPaddle.getYDimension()-6))) { //fix paddle noclipping
       leftDown = true;
     }
     
     //right paddle movement
-    if ((keyCode == UP) && (rightPaddle.getY() > 2)) {
+    if ((keyCode == UP) && (rightPaddle.getY() > 6)) { //fix paddle noclipping
       rightUp = true;
     }
-    if ((keyCode == DOWN) && (rightPaddle.getY() < (ySize-rightPaddle.getYDimension()-2))) {
+    if ((keyCode == DOWN) && (rightPaddle.getY() < (ySize-rightPaddle.getYDimension()-6))) { //fix paddle noclipping
       rightDown = true;
     }
 }

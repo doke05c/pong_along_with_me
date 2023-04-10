@@ -12,7 +12,7 @@ public Ball(double inputX, double inputY, double inputSpeed, double inputAngle) 
 //location
 private double x;
 private double y;
-private int radius = xSize/128;
+private double radius = xSize/128;
 
 public double getX() {
     return x;
@@ -20,6 +20,10 @@ public double getX() {
 
 public double getY() {
     return y;
+}
+
+public double getRadius() {
+    return radius;
 }
 
 //movement
@@ -44,7 +48,7 @@ public void moveBall() {
 //display
 
 public void display() {
-  circle((float)x, (float)y, radius);
+  circle((float)x, (float)y, (float)radius);
 }
 
 }

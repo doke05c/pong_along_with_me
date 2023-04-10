@@ -26,7 +26,7 @@ void setup(){
 }
   
 Ball ball = new Ball(xSize/2, ySize/2, ballSpeed, determineAngle());
-
+Paddle leftPaddle = new Paddle(paddleOffset-(xSize/80), ySize/2, xSize/80, ySize/12);
 
 void draw(){
   background(0);
@@ -42,6 +42,7 @@ void draw(){
     ball.display();
   }
   
+  leftPaddle.display();
   displayScore();
   ball.moveBall();
 }

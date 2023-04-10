@@ -1,9 +1,11 @@
 public class Paddle {
 
 //construction
-public Paddle(double inputX, double inputY) {
+public Paddle(double inputX, double inputY, double inputXDimension, double inputYDimension) {
   x = inputX;
   y = inputY;
+  xDimension = inputXDimension;
+  yDimension = inputYDimension;
 }
 
 //location

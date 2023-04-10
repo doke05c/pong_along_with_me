@@ -34,16 +34,21 @@ void draw(){
   background(0);
   if (ball.getX() < leftPaddleLocation+ball.getRadius()/2) {
     ball = new Ball(xSize/2, ySize/2, ballSpeed, determineAngle());
-    ball.display();
     rightScore++;
   } else if (ball.getX() > rightPaddleLocation-ball.getRadius()/2) {
     ball = new Ball(xSize/2, ySize/2, ballSpeed, determineAngle());
-    ball.display();
     leftScore++;
-  } else {
-    ball.display();
   }
   
+  if (keyPressed) {
+    if ((key == 'w' || key == 'W') && (leftPaddle.getY() > 2)) {
+      leftPaddle.movePaddle(ySize/-90);
+    } else if ((key == 's' || key == 'S') && (leftPaddle.getY() < (ySize-leftPaddle.getYDimension()-2))) {
+      leftPaddle.movePaddle(ySize/90);
+    }
+  }
+  
+  ball.display();
   leftPaddle.display();
   rightPaddle.display();
   displayScore();

@@ -31,6 +31,11 @@ public double getYDimension() {
 }
 
 //movement
+public void movePaddle(double amount) {
+  //userinput movement, this updates location every keystroke
+  y += amount;
+}
+
 //collision
 //display
 

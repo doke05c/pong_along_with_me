@@ -30,11 +30,11 @@ Paddle leftPaddle = new Paddle(paddleOffset-(xSize/80), ySize/2, xSize/80, ySize
 
 void draw(){
   background(0);
-  if (ball.getX() < leftPaddleLocation) {
+  if (ball.getX() < leftPaddleLocation+ball.getRadius()/2) {
     ball = new Ball(xSize/2, ySize/2, ballSpeed, determineAngle());
     ball.display();
     rightScore++;
-  } else if (ball.getX() > rightPaddleLocation) {
+  } else if (ball.getX() > rightPaddleLocation-ball.getRadius()/2) {
     ball = new Ball(xSize/2, ySize/2, ballSpeed, determineAngle());
     ball.display();
     leftScore++;
@@ -48,10 +48,10 @@ void draw(){
 }
 
 
-static final int FPS = 60;
+static final int FPS = 120;
 static final int xSize = /*960;*/1280;
 static final int ySize = /*540;*/720;
-static final int ballSpeed = xSize/128;
+static final double ballSpeed = xSize/(2.13*FPS);
 
 static final int paddleOffset = xSize/32;
 

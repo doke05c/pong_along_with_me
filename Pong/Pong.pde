@@ -40,7 +40,7 @@ void draw(){
       ball = new Ball(xSize/2, ySize/2, ballSpeed, determineAngle());
       rightScore++;
     } else {
-      print("reflect!");
+      ball.reflect(); //figure out a way to change angle relative to ball pos on paddle
     }
 
   } else if (ball.getX() > rightPaddleLocation-ball.getRadius()/2) {
@@ -48,7 +48,7 @@ void draw(){
       ball = new Ball(xSize/2, ySize/2, ballSpeed, determineAngle());
       leftScore++;
     } else {
-      print("reflect!");
+      ball.reflect(); //figure out a way to change angle relative to ball pos on paddle
     }
   }
   
@@ -61,6 +61,19 @@ void draw(){
   rightPaddle.display();
   displayScore();
   ball.moveBall();
+  
+  //debug
+  println("X Coordinate: ");
+  println(ball.getX());
+  
+  println("Y Coordinate: ");
+  println(ball.getY());
+  
+  println("Speed: ");
+  println(ball.getSpeed());
+  
+  println("Angle: ");
+  println(ball.getAngle());
 }
 
 void keyPressed() {

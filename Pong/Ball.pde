@@ -45,6 +45,11 @@ public void moveBall() {
 }
 
 //collision
+
+public void reflect() {
+  speed = speed * -1;
+}
+
 //display
 
 public void display() {

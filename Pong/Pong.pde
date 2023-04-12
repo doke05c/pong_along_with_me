@@ -2,6 +2,9 @@
 public int leftScore = 0;
 public int rightScore = 0;
 
+//set initial state of ball
+int ballState = RUNNING;
+
 //booleans for paddle movement check
 public boolean leftUp = false;
 public boolean leftDown = false;
@@ -49,9 +52,9 @@ Paddle rightPaddle = new Paddle(xSize-paddleOffset, ySize/2-ySize/20, xSize/80, 
 //every tick
 void draw(){
   background(0);
-  
+
   //how much leeway can we give the player for paddle reflects in yDimension?
-  double paddlePity = (Math.sin((ball.getAngle()/28.6479)-45.5531)+1)*3*ballSpeed+3;
+  double paddlePity = (Math.sin((ball.getAngle()/28.6479)-45.5531)+1)*3*ballSpeed+8;
   
   //where is each end of the paddle yDimension hitbox?
   double topLeftPaddleHitbox = leftPaddle.getY()-ball.getRadius()/2-paddlePity;
@@ -59,44 +62,70 @@ void draw(){
   double topRightPaddleHitbox = rightPaddle.getY()-ball.getRadius()/2-paddlePity;
   double bottomRightPaddleHitbox = rightPaddle.getY()+rightPaddle.getYDimension()+ball.getRadius()/2+paddlePity;
   
-  //determination of points: if ball hits a paddle, reflect. if ball misses paddle, increase score of other side
-  if (ball.getX() < leftPaddleEdgeXLocation+ball.getRadius()/2) {
-    if ((ball.getY() < topLeftPaddleHitbox) || (ball.getY() > bottomLeftPaddleHitbox)) {
-      ball = new Ball(xSize/2, ySize/2, ballSpeed, determineAngle());
-      rightScore++;
-    } else {
-      ball.reflectPaddle(getPaddleAngle(ball, topLeftPaddleHitbox, bottomLeftPaddleHitbox));
-    }
+  //determination of points: if ball hits a paddle, reflect. if ball misses paddle, mark it for reset
+  if (ballState == RUNNING) {
+    if (ball.getX() < leftPaddleEdgeXLocation+ball.getRadius()/2) {
+      if ((ball.getY() < topLeftPaddleHitbox) || (ball.getY() > bottomLeftPaddleHitbox)) {
+        ballState = MISSINGLEFT;
+      } else {
+        ball.reflectPaddle(getPaddleAngle(ball, topLeftPaddleHitbox, bottomLeftPaddleHitbox));
+      }
 
-  } else if (ball.getX() > rightPaddleEdgeXLocation-ball.getRadius()/2) {
-    if ((ball.getY() < topRightPaddleHitbox) || (ball.getY() > bottomRightPaddleHitbox)) {
-      ball = new Ball(xSize/2, ySize/2, ballSpeed, determineAngle());
-      leftScore++;
-    } else {
-      ball.reflectPaddle(180-getPaddleAngle(ball, topRightPaddleHitbox, bottomRightPaddleHitbox));
+    } else if (ball.getX() > rightPaddleEdgeXLocation-ball.getRadius()/2) {
+      if ((ball.getY() < topRightPaddleHitbox) || (ball.getY() > bottomRightPaddleHitbox)) {
+        ballState = MISSINGRIGHT;
+      } else {
+        ball.reflectPaddle(180-getPaddleAngle(ball, topRightPaddleHitbox, bottomRightPaddleHitbox));
+      }
     }
+  }
+  
+  //when the ball is marked for reset, make it go to the end of the screen. once that is done, reset it.
+  if (ballState == MISSINGLEFT) {
+    if (ball.getX()+ball.getRadius() > (-(xSize/3))) {ball.moveBallTick();}
+    else {ballState = RESETTINGLEFT;}
+  }
+  if (ballState == MISSINGRIGHT) {
+    if (ball.getX()+ball.getRadius() < (xSize+(xSize/3))) {ball.moveBallTick();}
+    else {ballState = RESETTINGRIGHT;}
+  }
+  
+  //resetting the ball
+  if (ballState == RESETTINGLEFT) {
+    ball = new Ball(xSize/2, ySize/2, ballSpeed, determineAngle());
+    rightScore++;
+    ballState = RUNNING;
+  }
+  if (ballState == RESETTINGRIGHT) {
+    ball = new Ball(xSize/2, ySize/2, ballSpeed, determineAngle());
+    leftScore++;
+    ballState = RUNNING;
   }
   
   //reflect ball off the VERTICAL ONLY! screen border
-  if (ball.getY() < ball.getRadius()/2) {
-    ball.reflectBorder();
-    ball.moveBall(0, ball.getRadius()/4);
-  }
-  if (ball.getY() > ySize-ball.getRadius()/2) {
-    ball.reflectBorder();
-    ball.moveBall(0, -1 * ball.getRadius()/4);
+  if (ballState == RUNNING) {
+    if (ball.getY() < ball.getRadius()/2) {
+      ball.reflectBorder();
+      ball.moveBall(0, ball.getRadius()/4);
+    }
+    if (ball.getY() > ySize-ball.getRadius()/2) {
+      ball.reflectBorder();
+      ball.moveBall(0, -1 * ball.getRadius()/4);
+    }
   }
   
   //display/keystroke updates
-  if (leftUp && (leftPaddle.getY() > 6)) {leftPaddle.movePaddle(ySize/-90);}
-  if (leftDown && (leftPaddle.getY() < (ySize-leftPaddle.getYDimension()-6))) {leftPaddle.movePaddle(ySize/90);}
-  if (rightUp && (rightPaddle.getY() > 6)) {rightPaddle.movePaddle(ySize/-90);}
-  if (rightDown && (rightPaddle.getY() < (ySize-rightPaddle.getYDimension()-6))) {rightPaddle.movePaddle(ySize/90);}
   ball.display();
   leftPaddle.display();
   rightPaddle.display();
   displayScore();
-  ball.moveBallTick();
+  if (ballState == RUNNING) {
+    if (leftUp && (leftPaddle.getY() > 6)) {leftPaddle.movePaddle(ySize/-90);}
+    if (leftDown && (leftPaddle.getY() < (ySize-leftPaddle.getYDimension()-6))) {leftPaddle.movePaddle(ySize/90);}
+    if (rightUp && (rightPaddle.getY() > 6)) {rightPaddle.movePaddle(ySize/-90);}
+    if (rightDown && (rightPaddle.getY() < (ySize-rightPaddle.getYDimension()-6))) {rightPaddle.movePaddle(ySize/90);}
+    ball.moveBallTick();
+  }
   
   //debug
   textSize(xSize/80);
@@ -126,6 +155,9 @@ void draw(){
   
   text("Paddle Pity", 10, 250);
   text((int)paddlePity, 10, 260);
+  
+  text("Ball State", 10, 280);
+  text(ballState, 10, 290);
 }
 
 void keyPressed() {
@@ -183,3 +215,10 @@ static final int leftSideLowerAngle = 152;
 //where should the ball check for paddles in xDimension?
 static final int rightPaddleEdgeXLocation = xSize - paddleOffset;
 static final int leftPaddleEdgeXLocation = paddleOffset;
+
+//what state is the ball in?
+static final int RUNNING = 69;
+static final int MISSINGLEFT = 70;
+static final int MISSINGRIGHT = 71;
+static final int RESETTINGLEFT = 72;
+static final int RESETTINGRIGHT = 73;

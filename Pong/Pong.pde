@@ -42,8 +42,8 @@ void setup(){
 
 //instantiate our objects
 Ball ball = new Ball(xSize/2, ySize/2, ballSpeed, determineAngle());
-Paddle leftPaddle = new Paddle(paddleOffset-(xSize/80), ySize/2, xSize/80, ySize/10);
-Paddle rightPaddle = new Paddle(xSize-paddleOffset, ySize/2, xSize/80, ySize/10);
+Paddle leftPaddle = new Paddle(paddleOffset-(xSize/80), ySize/2-ySize/20, xSize/80, ySize/10);
+Paddle rightPaddle = new Paddle(xSize-paddleOffset, ySize/2-ySize/20, xSize/80, ySize/10);
 
 
 //every tick
@@ -62,7 +62,7 @@ void draw(){
       ball = new Ball(xSize/2, ySize/2, ballSpeed, determineAngle());
       rightScore++;
     } else {
-      ball.reflectPaddle(getPaddleAngle(ball, topLeftPaddleHitbox, bottomLeftPaddleHitbox)); //figure out a way to change angle relative to ball pos on paddle
+      ball.reflectPaddle(getPaddleAngle(ball, topLeftPaddleHitbox, bottomLeftPaddleHitbox));
     }
 
   } else if (ball.getX() > rightPaddleEdgeXLocation-ball.getRadius()/2) {
@@ -70,7 +70,7 @@ void draw(){
       ball = new Ball(xSize/2, ySize/2, ballSpeed, determineAngle());
       leftScore++;
     } else {
-      ball.reflectPaddle(180-getPaddleAngle(ball, topRightPaddleHitbox, bottomRightPaddleHitbox)); //figure out a way to change angle relative to ball pos on paddle
+      ball.reflectPaddle(180-getPaddleAngle(ball, topRightPaddleHitbox, bottomRightPaddleHitbox));
     }
   }
   

@@ -144,7 +144,7 @@ void draw(){
   }
   
   //debug
-  textSize(xSize/80);
+  /*textSize(xSize/80);
   text("Ball X Coordinate: ", 10, 10);
   text((int)ball.getX(), 10, 20);
   
@@ -173,7 +173,7 @@ void draw(){
   text((int)paddlePity, 10, 260);
   
   text("Ball State", 10, 280);
-  text(ballState, 10, 290);
+  text(ballState, 10, 290);*/
 }
 
 void keyPressed() {

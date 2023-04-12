@@ -41,7 +41,7 @@ void setup(){
 }
 
 //instantiate our objects
-Ball ball = new Ball(xSize/2, ySize/2, ballSpeed, 85/*determineAngle()*/);
+Ball ball = new Ball(xSize/2, ySize/2, ballSpeed, determineAngle());
 Paddle leftPaddle = new Paddle(paddleOffset-(xSize/80), ySize/2-ySize/20, xSize/80, ySize/10);
 Paddle rightPaddle = new Paddle(xSize-paddleOffset, ySize/2-ySize/20, xSize/80, ySize/10);
 

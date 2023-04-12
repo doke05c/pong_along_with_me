@@ -85,10 +85,10 @@ void draw(){
   }
   
   //display/keystroke updates
-  if (leftUp) {leftPaddle.movePaddle(ySize/-90);}
-  if (leftDown) {leftPaddle.movePaddle(ySize/90);}
-  if (rightUp) {rightPaddle.movePaddle(ySize/-90);}
-  if (rightDown) {rightPaddle.movePaddle(ySize/90);}
+  if (leftUp && (leftPaddle.getY() > 6)) {leftPaddle.movePaddle(ySize/-90);}
+  if (leftDown && (leftPaddle.getY() < (ySize-leftPaddle.getYDimension()-6))) {leftPaddle.movePaddle(ySize/90);}
+  if (rightUp && (rightPaddle.getY() > 6)) {rightPaddle.movePaddle(ySize/-90);}
+  if (rightDown && (rightPaddle.getY() < (ySize-rightPaddle.getYDimension()-6))) {rightPaddle.movePaddle(ySize/90);}
   ball.display();
   leftPaddle.display();
   rightPaddle.display();
@@ -124,18 +124,18 @@ void draw(){
 
 void keyPressed() {
     //left paddle movement
-    if ((key == 'w' || key == 'W') && (leftPaddle.getY() > 6)) { //fix paddle noclipping
+    if (key == 'w' || key == 'W') {
       leftUp = true;
     }
-    if ((key == 's' || key == 'S') && (leftPaddle.getY() < (ySize-leftPaddle.getYDimension()-6))) { //fix paddle noclipping
+    if (key == 's' || key == 'S') {
       leftDown = true;
     }
     
     //right paddle movement
-    if ((keyCode == UP) && (rightPaddle.getY() > 6)) { //fix paddle noclipping
+    if (keyCode == UP) {
       rightUp = true;
     }
-    if ((keyCode == DOWN) && (rightPaddle.getY() < (ySize-rightPaddle.getYDimension()-6))) { //fix paddle noclipping
+    if (keyCode == DOWN) { 
       rightDown = true;
     }
 }
@@ -179,4 +179,4 @@ static final int rightPaddleEdgeXLocation = xSize - paddleOffset;
 static final int leftPaddleEdgeXLocation = paddleOffset;
 
 //how much leeway can we give the player for paddle reflects in yDimension?
-static final int paddlePity = 3;
+static final int paddlePity = 3; //update to increase the closer the angle is to vertical (90 or 270)

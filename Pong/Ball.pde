@@ -51,9 +51,9 @@ public void moveBall(double xIncrement, double yIncrement) {
 }
 
 //collision
-public void reflectPaddle() {
-  //reflect ball against paddle (TO BE IMPROVED!)
-  angle = 180-(angle%360);
+public void reflectPaddle(double inputAngle) {
+  //reflect ball against paddle
+  angle = inputAngle;
 }
 
 public void reflectBorder() {

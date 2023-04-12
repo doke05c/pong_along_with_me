@@ -41,7 +41,7 @@ void setup(){
 }
 
 //instantiate our objects
-Ball ball = new Ball(xSize/2, ySize/2, ballSpeed, determineAngle());
+Ball ball = new Ball(xSize/2, ySize/2, ballSpeed, 85/*determineAngle()*/);
 Paddle leftPaddle = new Paddle(paddleOffset-(xSize/80), ySize/2-ySize/20, xSize/80, ySize/10);
 Paddle rightPaddle = new Paddle(xSize-paddleOffset, ySize/2-ySize/20, xSize/80, ySize/10);
 
@@ -51,7 +51,7 @@ void draw(){
   background(0);
   
   //how much leeway can we give the player for paddle reflects in yDimension?
-  double paddlePity = 3; //update to increase the closer the angle is to vertical (90 or 270)
+  double paddlePity = (Math.sin((ball.getAngle()/28.6479)-45.5531)+1)*3*ballSpeed+3;
   
   //where is each end of the paddle yDimension hitbox?
   double topLeftPaddleHitbox = leftPaddle.getY()-ball.getRadius()/2-paddlePity;
@@ -123,6 +123,9 @@ void draw(){
   
   text("Bottom Right Paddle Hitbox", 10, 220);
   text((int)bottomRightPaddleHitbox, 10, 230);
+  
+  text("Paddle Pity", 10, 250);
+  text((int)paddlePity, 10, 260);
 }
 
 void keyPressed() {

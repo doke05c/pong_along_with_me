@@ -67,6 +67,7 @@ void draw(){
     if (ball.getX() < leftPaddleEdgeXLocation+ball.getRadius()/2) {
       if ((ball.getY() < topLeftPaddleHitbox) || (ball.getY() > bottomLeftPaddleHitbox)) {
         ballState = MISSINGLEFT;
+        rightScore++;
       } else {
         ball.reflectPaddle(getPaddleAngle(ball, topLeftPaddleHitbox, bottomLeftPaddleHitbox));
       }
@@ -74,6 +75,7 @@ void draw(){
     } else if (ball.getX() > rightPaddleEdgeXLocation-ball.getRadius()/2) {
       if ((ball.getY() < topRightPaddleHitbox) || (ball.getY() > bottomRightPaddleHitbox)) {
         ballState = MISSINGRIGHT;
+        leftScore++;
       } else {
         ball.reflectPaddle(180-getPaddleAngle(ball, topRightPaddleHitbox, bottomRightPaddleHitbox));
       }
@@ -82,23 +84,37 @@ void draw(){
   
   //when the ball is marked for reset, make it go to the end of the screen. once that is done, reset it.
   if (ballState == MISSINGLEFT) {
-    if (ball.getX()+ball.getRadius() > (-(xSize/3))) {ball.moveBallTick();}
-    else {ballState = RESETTINGLEFT;}
+    if (ball.getX()+ball.getRadius() > (-(xSize/3))) {
+      ball.moveBallTick();
+      rect(xSize/2-xSize/10, ySize/2-ySize/10, xSize/5, ySize/5);
+      fill(0);
+      textSize(xSize/40);
+      text("Right Scores!", xSize/2-xSize/15, ySize/2+ySize/100);
+      fill(255);
+    } else {
+      ballState = RESETTINGLEFT;
+    }
   }
   if (ballState == MISSINGRIGHT) {
-    if (ball.getX()+ball.getRadius() < (xSize+(xSize/3))) {ball.moveBallTick();}
-    else {ballState = RESETTINGRIGHT;}
+    if (ball.getX()+ball.getRadius() < (xSize+(xSize/3))) {
+      ball.moveBallTick();
+      rect(xSize/2-xSize/10, ySize/2-ySize/10, xSize/5, ySize/5);
+      fill(0);
+      textSize(xSize/40);
+      text("Left Scores!", xSize/2-xSize/16.3, ySize/2+ySize/100);
+      fill(255);
+    } else {
+      ballState = RESETTINGRIGHT;
+    }
   }
   
   //resetting the ball
   if (ballState == RESETTINGLEFT) {
     ball = new Ball(xSize/2, ySize/2, ballSpeed, determineAngle());
-    rightScore++;
     ballState = RUNNING;
   }
   if (ballState == RESETTINGRIGHT) {
     ball = new Ball(xSize/2, ySize/2, ballSpeed, determineAngle());
-    leftScore++;
     ballState = RUNNING;
   }
   

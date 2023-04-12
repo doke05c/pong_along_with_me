@@ -11,7 +11,7 @@ public boolean rightDown = false;
 //display score on screen
 public void displayScore() {
   textSize(xSize/20);
-  text(leftScore, xSize/2 - xSize/16, ySize/10); 
+  text(leftScore, xSize/2 - xSize/16 - xSize/20, ySize/10); 
   text(rightScore, xSize/2 + xSize/16, ySize/10); 
 }
 
@@ -49,6 +49,9 @@ Paddle rightPaddle = new Paddle(xSize-paddleOffset, ySize/2-ySize/20, xSize/80, 
 //every tick
 void draw(){
   background(0);
+  
+  //how much leeway can we give the player for paddle reflects in yDimension?
+  double paddlePity = 3; //update to increase the closer the angle is to vertical (90 or 270)
   
   //where is each end of the paddle yDimension hitbox?
   double topLeftPaddleHitbox = leftPaddle.getY()-ball.getRadius()/2-paddlePity;
@@ -177,6 +180,3 @@ static final int leftSideLowerAngle = 152;
 //where should the ball check for paddles in xDimension?
 static final int rightPaddleEdgeXLocation = xSize - paddleOffset;
 static final int leftPaddleEdgeXLocation = paddleOffset;
-
-//how much leeway can we give the player for paddle reflects in yDimension?
-static final int paddlePity = 3; //update to increase the closer the angle is to vertical (90 or 270)
